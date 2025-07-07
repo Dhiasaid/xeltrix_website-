@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xeltrix - Contact</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<script>
+  const form = document.querySelector("form");
+  form.addEventListener("submit", () => {
+    alert("Thank you for contacting us! We’ll get back to you soon.");
+  });
+</script>
+<body>
+
+  <header>
+    <h1>Xeltrix</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <section class="section">
+    <h2>Contact Us</h2>
+    <p>Have questions or want to work with us? We'd love to hear from you.</p>
+    <form action="contact.php" method="POST">
+  <input type="text" name="name" placeholder="Your Name" required /><br><br>
+  <input type="email" name="email" placeholder="Your Email" required /><br><br>
+  <textarea name="message" rows="5" placeholder="Your Message" required></textarea><br><br>
+
+  <section class="section">
+  <h2>Upload a File</h2>
+  <form action="contact.php" method="POST" enctype="multipart/form-data">
+      <input type="file" name="attachment" required /><br><br>
+      <button type="submit">Upload</button>
+  </form>
+</section>
+
+  <button type="submit">Send Message</button>
+</form>
+  </section>
+
+  <footer>
+    &copy; 2025 Xeltrix. All rights reserved.
+  </footer>
+
+</body>
+</html>
