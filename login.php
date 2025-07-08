@@ -1,45 +1,36 @@
 <?php
 session_start();
-include 'config.php';  // Your database connection file
+include 'config.php';  
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email']);
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Prepare statement to avoid SQL injection
-    $stmt = $conn->prepare("SELECT id, name, password_hash, role FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
 
-    if ($stmt->num_rows == 1) {
-        // Bind result variables
-        $stmt->bind_result($id, $name, $password_hash, $role);
-        $stmt->fetch();
+    $sql = "SELECT id, name, email, role FROM users WHERE email = '$email' AND password = '$password'";
+    echo "<pre>$sql</pre>";
+    $result = $conn->query($sql);
 
-        // Verify password
-        if (password_verify($password, $password_hash)) {
-            // Password correct, set session variables
-            $_SESSION['user_id'] = $id;
-            $_SESSION['user_name'] = $name;
-            $_SESSION['user_email'] = $email;
-            $_SESSION['user_role'] = $role;
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
 
-            // Redirect based on role
-            if ($role === 'admin') {
-                header("Location: admin_dashboard.php");
-            } else {
-                header("Location: dashboard.php");
-            }
-            exit();
+        
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['user_name'] = $row['name'];
+        $_SESSION['user_email'] = $row['email'];
+        $_SESSION['user_role'] = $row['role'];
+
+
+        if ($row['role'] === 'admin') {
+            header("Location: admin_dashboard.php");
         } else {
-            echo "Incorrect password.";
+            header("Location: dashboard.php");
         }
+        exit();
     } else {
-        echo "Email not registered.";
+        echo "Login failed.";
     }
 
-    $stmt->close();
     $conn->close();
 } else {
     echo "Invalid request.";
