@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       while ($row = $result->fetch_assoc()) {
          
           echo "<p><strong>" . $row['name'] . ":</strong> " . $row['comment'] . "</p>";
+          echo "<a href='delete_comment.php?id=" . $row['id'] . "'>Delete</a>";
       }
       ?>
     </div>
