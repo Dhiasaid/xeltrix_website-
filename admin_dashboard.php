@@ -2,7 +2,6 @@
 session_start();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
-    // Not logged in or not admin — redirect to login
     header("Location: login.html");
     exit();
 }

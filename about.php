@@ -3,8 +3,10 @@ include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
-    $name = $conn->real_escape_string($_POST['name']);
-    $comment = $conn->real_escape_string($_POST['comment']);
+    $name = $_POST['name'];
+    $comment = $_POST['comment'];
+    $sql = "INSERT INTO comments (name, comment) VALUES ('$name', '$comment')";
+ 
 
     
     $sql = "INSERT INTO comments (name, comment) VALUES ('$name', '$comment')";
@@ -34,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <a href="index.html">Home</a>
       <a href="about.php">About</a>
       <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
+      <a href="contact.php">Contact</a>
       <a href="login.html">Login</a>
     </nav>
   </header>

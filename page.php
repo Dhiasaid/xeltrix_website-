@@ -1,6 +1,10 @@
 <?php
-$page = isset($_GET['page']) ? $_GET['page'] : 'home.php';
+if (!isset($_GET['page'])) {
+    die("Missing 'page' parameter.");
+}
 
-// Local File Inclusion vulnerability
+$page = $_GET['page']; // ❗ No sanitization = LFI
+
+// Try to include the specified file
 include($page);
 ?>

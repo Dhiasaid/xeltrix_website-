@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Basic validation
     if ($password !== $confirm_password) {
         die("Passwords do not match.");
     }
@@ -16,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Invalid email format.");
     }
 
-    // Check if email already exists
     $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -26,12 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 
-    // Hash the password
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $password_plain = $password;
 
-    // Insert user
     $stmt = $conn->prepare("INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $name, $email, $password_hash);
+    $stmt->bind_param("sss", $name, $email, $password_plain);
 
     if ($stmt->execute()) {
         echo "Registration successful. <a href='login.html'>Login here</a>.";

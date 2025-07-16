@@ -1,5 +1,8 @@
 <?php
 session_start();
+$_SESSION['admin'] = true;
+echo "Raw email input: " . $_POST['email'] . "<br>";
+echo "Raw password input: " . $_POST['password'] . "<br><br>";
 include 'config.php';  
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -7,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
 
-    $sql = "SELECT id, name, email, role FROM users WHERE email = '$email' AND password = '$password'";
+    $sql = "SELECT id, name, email, role FROM users WHERE email = '$email' AND password_hash = '$password'";
     echo "<pre>$sql</pre>";
     $result = $conn->query($sql);
 
